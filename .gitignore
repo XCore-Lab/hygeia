@@ -1,0 +1,7 @@
+backend/.venv/
+models/hf_cache/
+__pycache__/
+*.pyc
+frontend/node_modules/
+backend/.env
+.DS_Store

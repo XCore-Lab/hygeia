@@ -1,0 +1,17 @@
+# torch==2.6.0 / torchvision==0.21.0 are installed from https://download.pytorch.org/whl/cu124 (see setup.ps1)
+timm==1.0.28
+transformers>=4.57,<5
+accelerate>=1.2
+bitsandbytes>=0.45
+safetensors
+huggingface_hub
+fastapi>=0.115
+uvicorn[standard]>=0.30
+python-multipart
+pydantic>=2
+python-dotenv
+pillow
+numpy
+opencv-python-headless
+scipy
+sentencepiece

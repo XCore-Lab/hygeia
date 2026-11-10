@@ -1,0 +1,54 @@
+{
+  "n": 720,
+  "escalation_threshold": 0.2,
+  "T11_dinov2_l14_deep_long_final": {
+    "accuracy": 0.95,
+    "macro_f1": 0.9500304285799985
+  },
+  "T09_dinov2_b14_res336": {
+    "accuracy": 0.9277777777777778,
+    "macro_f1": 0.9282891969713952
+  },
+  "T05_dinov2_b14_unfreeze4": {
+    "accuracy": 0.9111111111111111,
+    "macro_f1": 0.9106690662656055
+  },
+  "ensemble": {
+    "weights": {
+      "T05_dinov2_b14_unfreeze4": 0.16666666666666666,
+      "T09_dinov2_b14_res336": 0.16666666666666666,
+      "T11_dinov2_l14_deep_long_final": 0.6666666666666666
+    },
+    "accuracy": 0.9486111111111111,
+    "macro_f1": 0.9486396734372781
+  },
+  "binary@0.2": {
+    "sensitivity": 1.0,
+    "specificity": 0.8666666666666667,
+    "missed_abnormal": 0
+  },
+  "binary@0.5": {
+    "sensitivity": 0.9983333333333333,
+    "specificity": 0.9666666666666667,
+    "missed_abnormal": 1
+  },
+  "binary@0.7": {
+    "sensitivity": 0.995,
+    "specificity": 0.9833333333333333,
+    "missed_abnormal": 3
+  },
+  "confidence_gate": {
+    "threshold": 0.6,
+    "coverage": 0.9486111111111111,
+    "accuracy_on_retained": 0.9707174231332357
+  },
+  "documented": {
+    "T11_test_accuracy": 0.9486,
+    "ensemble_test_accuracy": 0.9486,
+    "ensemble_test_macro_f1": 0.9484,
+    "zero_miss@0.20": {
+      "sensitivity": 1.0,
+      "specificity": 0.8917
+    }
+  }
+}

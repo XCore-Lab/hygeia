@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 560" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img"
+     aria-label="A skin area is scanned and noted, a short anonymous chat follows, and the person is directed to a clinic">
+<defs>
+ <clipPath id="blG"><path d="M164 52 C238 48 288 100 285 172 C282 240 232 288 162 286 C92 284 46 236 48 168 C50 100 96 55 164 52 Z"/></clipPath>
+ <clipPath id="lensG"><circle r="52"/></clipPath>
+ <linearGradient id="skG" x1="0" y1="0" x2="1" y2="1">
+   <stop offset="0%" stop-color="#E3C9AC"/><stop offset="100%" stop-color="#CBB79C"/></linearGradient>
+</defs>
+<style>
+ /* master cycle: 14s */
+ #glass{animation:drift 14s cubic-bezier(.45,0,.55,1) infinite}
+ @keyframes drift{0%{transform:translate(118px,118px)}14%,96%{transform:translate(206px,192px)}100%{transform:translate(118px,118px)}}
+ #arc{fill:none;stroke:#00A36C;stroke-width:4.6;stroke-linecap:round;stroke-dasharray:390;stroke-dashoffset:390;
+      transform:rotate(-90deg);transform-box:fill-box;transform-origin:center;animation:arc 14s ease-in-out infinite}
+ @keyframes arc{0%,15%{stroke-dashoffset:390;opacity:1}27%{stroke-dashoffset:0;opacity:1}33%{opacity:0}100%{stroke-dashoffset:390;opacity:0}}
+ #ring{opacity:0;transform-box:fill-box;transform-origin:center;animation:ring 14s ease-out infinite}
+ @keyframes ring{0%,27%{opacity:0;transform:scale(.6)}33%{opacity:1;transform:scale(1)}36%{transform:scale(1.05)}40%,92%{opacity:1;transform:scale(1)}97%,100%{opacity:0}}
+ #noted{opacity:0;transform-box:fill-box;transform-origin:center;animation:noted 14s ease-out infinite}
+ @keyframes noted{0%,30%{opacity:0;transform:scale(.6)}36%{opacity:1;transform:scale(1)}92%{opacity:1}97%,100%{opacity:0}}
+ .conn{fill:none;stroke:#40E0D0;stroke-width:2.8;stroke-dasharray:5 8;stroke-linecap:round;opacity:0}
+ #c1{animation:cf 14s ease-out infinite}
+ @keyframes cf{0%,34%{opacity:0}40%,92%{opacity:.6}97%,100%{opacity:0}}
+ #c2{animation:cf2 14s ease-out infinite}
+ @keyframes cf2{0%,68%{opacity:0}74%,92%{opacity:.6}97%,100%{opacity:0}}
+ .bb{opacity:0;transform-box:fill-box;animation:bb 14s ease-out infinite}
+ #b1{transform-origin:0% 100%} #b2{transform-origin:100% 100%;animation-name:bb2} #b3{transform-origin:0% 100%;animation-name:bb3}
+ @keyframes bb{0%,40%{opacity:0;transform:translateY(7px) scale(.9)}45%,92%{opacity:1;transform:none}97%,100%{opacity:0}}
+ @keyframes bb2{0%,49%{opacity:0;transform:translateY(7px) scale(.9)}54%,92%{opacity:1;transform:none}97%,100%{opacity:0}}
+ @keyframes bb3{0%,67%{opacity:0;transform:translateY(7px) scale(.9)}72%,92%{opacity:1;transform:none}97%,100%{opacity:0}}
+ #tw{animation:tw 14s linear infinite}
+ @keyframes tw{0%,56%{opacity:0}57%,66%{opacity:1}67%,100%{opacity:0}}
+ #tw circle{animation:tp 1s ease-in-out infinite}
+ #tw circle:nth-of-type(2){animation-delay:.18s} #tw circle:nth-of-type(3){animation-delay:.36s}
+ @keyframes tp{0%,100%{opacity:.3}50%{opacity:1}}
+ #pin{opacity:0;transform-box:fill-box;transform-origin:50% 100%;animation:pn 14s ease-out infinite}
+ @keyframes pn{0%,76%{opacity:0;transform:translateY(-20px) scale(.86)}82%{opacity:1;transform:none}86%{transform:scale(1.05)}90%,92%{transform:none;opacity:1}97%,100%{opacity:0}}
+ #halo{fill:none;stroke:#00A36C;stroke-width:2;opacity:0;transform-box:fill-box;transform-origin:center;animation:hl 14s ease-out infinite}
+ @keyframes hl{0%,80%{opacity:0;transform:scale(.55)}86%{opacity:.5}94%{opacity:0;transform:scale(1.6)}100%{opacity:0}}
+ #gnd{opacity:0;animation:gn 14s ease-out infinite}
+ @keyframes gn{0%,78%{opacity:0}84%,92%{opacity:.15}97%,100%{opacity:0}}
+ @media (prefers-reduced-motion:reduce){
+   *{animation:none!important}
+   #glass{transform:translate(206px,192px)}
+   #arc,#tw{display:none}
+   #ring,#noted,#c1,#c2,.bb,#pin{opacity:1} #halo{opacity:0} #gnd{opacity:.15}
+ }
+</style>
+
+<!-- 1 · the skin patch -->
+<path d="M164 52 C238 48 288 100 285 172 C282 240 232 288 162 286 C92 284 46 236 48 168 C50 100 96 55 164 52 Z" fill="url(#skG)"/>
+<g clip-path="url(#blG)"><circle cx="107" cy="179" r="2.2" fill="#1434A4" opacity="0.11"/><circle cx="196" cy="71" r="1.4" fill="#1434A4" opacity="0.13"/><circle cx="112" cy="109" r="3.6" fill="#1434A4" opacity="0.10"/><circle cx="244" cy="164" r="2.8" fill="#1434A4" opacity="0.07"/><circle cx="198" cy="252" r="2.6" fill="#1434A4" opacity="0.12"/><circle cx="206" cy="70" r="3.1" fill="#1434A4" opacity="0.11"/><circle cx="121" cy="63" r="3.3" fill="#1434A4" opacity="0.10"/><circle cx="217" cy="255" r="3.0" fill="#1434A4" opacity="0.14"/><circle cx="143" cy="237" r="2.4" fill="#1434A4" opacity="0.14"/><circle cx="254" cy="78" r="1.7" fill="#1434A4" opacity="0.07"/><circle cx="274" cy="155" r="2.8" fill="#1434A4" opacity="0.08"/><circle cx="169" cy="143" r="2.2" fill="#1434A4" opacity="0.11"/><circle cx="186" cy="260" r="2.9" fill="#1434A4" opacity="0.14"/><circle cx="249" cy="280" r="2.9" fill="#1434A4" opacity="0.07"/><circle cx="250" cy="274" r="3.4" fill="#1434A4" opacity="0.11"/><circle cx="216" cy="104" r="3.2" fill="#1434A4" opacity="0.11"/><circle cx="118" cy="70" r="3.3" fill="#1434A4" opacity="0.15"/><circle cx="72" cy="237" r="2.3" fill="#1434A4" opacity="0.07"/><circle cx="120" cy="230" r="3.3" fill="#1434A4" opacity="0.05"/><circle cx="193" cy="66" r="3.0" fill="#1434A4" opacity="0.08"/><circle cx="255" cy="278" r="2.5" fill="#1434A4" opacity="0.15"/><circle cx="123" cy="73" r="2.7" fill="#1434A4" opacity="0.05"/><circle cx="97" cy="148" r="2.7" fill="#1434A4" opacity="0.07"/><circle cx="62" cy="252" r="2.1" fill="#1434A4" opacity="0.15"/><circle cx="258" cy="141" r="2.4" fill="#1434A4" opacity="0.10"/><circle cx="200" cy="191" r="2.6" fill="#1434A4" opacity="0.11"/><circle cx="268" cy="171" r="2.3" fill="#1434A4" opacity="0.12"/><circle cx="107" cy="124" r="3.6" fill="#1434A4" opacity="0.10"/><circle cx="178" cy="59" r="2.3" fill="#1434A4" opacity="0.11"/><circle cx="57" cy="195" r="2.8" fill="#1434A4" opacity="0.06"/><circle cx="196" cy="161" r="2.9" fill="#1434A4" opacity="0.09"/><circle cx="215" cy="223" r="1.4" fill="#1434A4" opacity="0.06"/><circle cx="207" cy="274" r="2.0" fill="#1434A4" opacity="0.10"/><circle cx="188" cy="128" r="2.2" fill="#1434A4" opacity="0.08"/><circle cx="137" cy="191" r="2.1" fill="#1434A4" opacity="0.09"/><circle cx="230" cy="62" r="2.7" fill="#1434A4" opacity="0.12"/><circle cx="123" cy="106" r="3.2" fill="#1434A4" opacity="0.07"/><circle cx="95" cy="154" r="2.9" fill="#1434A4" opacity="0.06"/><circle cx="126" cy="131" r="3.2" fill="#1434A4" opacity="0.09"/><circle cx="249" cy="94" r="2.1" fill="#1434A4" opacity="0.12"/><circle cx="256" cy="158" r="1.9" fill="#1434A4" opacity="0.06"/><circle cx="174" cy="99" r="3.2" fill="#1434A4" opacity="0.13"/><circle cx="94" cy="119" r="3.2" fill="#1434A4" opacity="0.11"/><circle cx="237" cy="134" r="1.7" fill="#1434A4" opacity="0.08"/><circle cx="235" cy="117" r="2.2" fill="#1434A4" opacity="0.09"/><circle cx="149" cy="149" r="3.4" fill="#1434A4" opacity="0.07"/><circle cx="53" cy="269" r="3.3" fill="#1434A4" opacity="0.15"/><circle cx="152" cy="271" r="3.4" fill="#1434A4" opacity="0.07"/><circle cx="223" cy="245" r="2.9" fill="#1434A4" opacity="0.10"/><circle cx="118" cy="133" r="1.9" fill="#1434A4" opacity="0.06"/><circle cx="187" cy="121" r="3.2" fill="#1434A4" opacity="0.05"/><circle cx="260" cy="213" r="3.4" fill="#1434A4" opacity="0.14"/><circle cx="259" cy="186" r="1.4" fill="#1434A4" opacity="0.12"/><circle cx="92" cy="124" r="2.9" fill="#1434A4" opacity="0.10"/><circle cx="147" cy="268" r="2.7" fill="#1434A4" opacity="0.08"/><circle cx="110" cy="251" r="2.4" fill="#1434A4" opacity="0.13"/><circle cx="133" cy="101" r="2.6" fill="#1434A4" opacity="0.13"/><circle cx="91" cy="235" r="3.4" fill="#1434A4" opacity="0.13"/><circle cx="241" cy="58" r="2.8" fill="#1434A4" opacity="0.14"/><circle cx="63" cy="117" r="2.0" fill="#1434A4" opacity="0.10"/><circle cx="149" cy="163" r="3.1" fill="#1434A4" opacity="0.05"/><circle cx="65" cy="85" r="1.7" fill="#1434A4" opacity="0.06"/><circle cx="276" cy="249" r="1.6" fill="#1434A4" opacity="0.10"/><circle cx="125" cy="127" r="2.2" fill="#1434A4" opacity="0.11"/><circle cx="187" cy="138" r="1.8" fill="#1434A4" opacity="0.08"/><circle cx="80" cy="182" r="3.0" fill="#1434A4" opacity="0.09"/><circle cx="70" cy="96" r="2.2" fill="#1434A4" opacity="0.11"/><circle cx="232" cy="142" r="3.2" fill="#1434A4" opacity="0.11"/><circle cx="151" cy="140" r="2.5" fill="#1434A4" opacity="0.12"/><circle cx="149" cy="213" r="2.4" fill="#1434A4" opacity="0.07"/><g transform="translate(206,192)" opacity=".72"><ellipse rx="15" ry="11.5" fill="#B8756B" opacity=".55"/><ellipse cx="-8" cy="5" rx="8" ry="6" fill="#B8756B" opacity=".65"/><ellipse cx="7" cy="-5" rx="6.5" ry="5" fill="#B8756B" opacity=".6"/></g></g>
+<path d="M164 52 C238 48 288 100 285 172 C282 240 232 288 162 286 C92 284 46 236 48 168 C50 100 96 55 164 52 Z" fill="none" stroke="#1434A4" stroke-width="3" opacity=".28"/>
+
+<!-- 2 · noted -->
+<g id="ring">
+  <circle cx="206" cy="192" r="38" fill="none" stroke="#00A36C" stroke-width="2.8" stroke-dasharray="12 9" stroke-linecap="round"/>
+  <circle cx="206" cy="192" r="38" fill="#00A36C" opacity=".08"/>
+</g>
+<g id="noted">
+  <circle cx="262" cy="140" r="15" fill="#00A36C"/>
+  <path d="M255 140l5 5 9.5-10" fill="none" stroke="#F2FBFC" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+
+<!-- lens -->
+<g id="glass">
+  <circle r="52" fill="#F2FBFC" opacity=".34"/>
+  <g clip-path="url(#lensG)"><circle r="52" fill="#E3C9AC" opacity=".5"/><g transform="scale(1.7)" opacity=".8"><ellipse rx="15" ry="11.5" fill="#B8756B" opacity=".55"/><ellipse cx="-8" cy="5" rx="8" ry="6" fill="#B8756B" opacity=".65"/><ellipse cx="7" cy="-5" rx="6.5" ry="5" fill="#B8756B" opacity=".6"/></g></g>
+  <circle r="52" fill="none" stroke="#1434A4" stroke-width="6"/>
+  <circle id="arc" r="62"/>
+  <path d="M37 37 L66 66" stroke="#1434A4" stroke-width="12" stroke-linecap="round"/>
+</g>
+
+<!-- 3 · the chat -->
+<path id="c1" class="conn" d="M262 296 C282 322 296 336 312 348"/>
+<g>
+  <rect x="300" y="332" width="228" height="158" rx="18" fill="#FAFEFF" stroke="#1434A4" stroke-width="3"/>
+  <circle cx="326" cy="358" r="9" fill="#1434A4"/>
+  <rect x="342" y="353" width="74" height="9" rx="4.5" fill="#1434A4" opacity=".28"/>
+  <g id="b1" class="bb">
+    <rect x="316" y="378" width="118" height="28" rx="13" fill="#1434A4"/>
+    <rect x="328" y="389" width="94" height="6" rx="3" fill="#F2FBFC" opacity=".85"/>
+  </g>
+  <g id="b2" class="bb">
+    <rect x="394" y="414" width="118" height="28" rx="13" fill="#CFE6EA"/>
+    <rect x="406" y="425" width="80" height="6" rx="3" fill="#1434A4" opacity=".55"/>
+  </g>
+  <g id="b3" class="bb">
+    <rect x="316" y="450" width="132" height="28" rx="13" fill="#1434A4"/>
+    <rect x="328" y="461" width="106" height="6" rx="3" fill="#F2FBFC" opacity=".85"/>
+  </g>
+  <g id="tw">
+    <circle cx="332" cy="464" r="4" fill="#2C51C7"/>
+    <circle cx="346" cy="464" r="4" fill="#2C51C7"/>
+    <circle cx="360" cy="464" r="4" fill="#2C51C7"/>
+  </g>
+</g>
+
+<!-- 4 · the clinic -->
+<path id="c2" class="conn" d="M470 326 C468 296 462 268 452 244"/>
+<ellipse id="gnd" cx="446" cy="212" rx="19" ry="6" fill="#1434A4"/>
+<circle id="halo" cx="446" cy="148" r="46"/>
+<g id="pin">
+  <path d="M446 90c-22 0-40 18-40 40 0 28 40 82 40 82s40-54 40-82c0-22-18-40-40-40z" fill="#1434A4"/>
+  <path d="M446 110v40M426 130h40" stroke="#F2FBFC" stroke-width="7.5" stroke-linecap="round"/>
+</g>
+
+<!-- men's mark -->
+<g transform="translate(76,506) scale(1.05)" opacity=".8">
+  <circle cx="0" cy="9" r="16" fill="none" stroke="#2C51C7" stroke-width="4.6"/>
+  <path d="M11.5 -2.5 L28 -19 M18 -19 H28 V-9" fill="none" stroke="#2C51C7" stroke-width="4.6"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

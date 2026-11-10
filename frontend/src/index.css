@@ -1,0 +1,915 @@
+html {
+  scroll-behavior: smooth;
+  /* Section anchors would otherwise land underneath the fixed header. */
+  scroll-padding-top: 5rem;
+  /* Belt and braces against a stray wide child causing sideways drag. */
+  overflow-x: hidden;
+}
+
+@media (min-width: 640px) {
+  html {
+    scroll-padding-top: 6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Hygeia palette
+       Turquoise      #40E0D0  hsl(174 72% 56%)
+       Electric Blue  #7DF9FF  hsl(183 100% 75%)
+       Egyptian Blue  #1434A4  hsl(227 78% 36%)
+       Jade           #00A36C  hsl(160 100% 32%)
+       Egyptian Blue carries the weight, turquoise accents, jade marks the
+       reassuring notes, electric blue lifts the pale surfaces. */
+    --background: 187 55% 97%;
+    --foreground: 222 66% 13%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 66% 13%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 66% 13%;
+
+    --primary: 227 78% 36%;
+    --primary-foreground: 187 55% 97%;
+
+    --secondary: 176 55% 92%;
+    --secondary-foreground: 227 78% 30%;
+
+    --muted: 195 35% 94%;
+    --muted-foreground: 220 16% 42%;
+
+    --accent: 174 72% 56%;
+    --accent-foreground: 226 72% 18%;
+
+    --destructive: 0 72% 46%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 195 30% 87%;
+    --input: 195 30% 87%;
+    --ring: 227 78% 36%;
+
+    --radius: 0.75rem;
+
+    /* Brand scale */
+    --royal: 227 78% 36%;
+    --royal-light: 224 70% 48%;
+    --royal-dark: 226 72% 21%;
+    --royal-tint: 220 85% 96%;
+    --turquoise: 174 72% 56%;
+    /* Darkened for text: #40E0D0 itself is far too light to read on white. */
+    --turquoise-deep: 176 90% 25%;
+    --turquoise-tint: 176 62% 93%;
+    --electric: 183 100% 75%;
+    --electric-tint: 185 100% 94%;
+    --jade: 160 100% 32%;
+    --jade-tint: 160 50% 92%;
+    --ice: 187 55% 97%;
+    --mist: 195 40% 92%;
+    --ink: 222 66% 13%;
+    --ink-soft: 220 16% 42%;
+    --amber: 36 92% 42%;
+    --amber-tint: 40 90% 93%;
+    --coral: 6 78% 48%;
+    --coral-tint: 8 85% 94%;
+
+    /* Legacy health-* tokens repointed so older pages inherit the rebrand. */
+    --health-green: 227 78% 36%;
+    --health-green-light: 224 70% 48%;
+    --health-green-dark: 226 72% 21%;
+    --health-mint: 176 62% 93%;
+    --health-mint-hover: 176 55% 88%;
+    --health-sage: 195 30% 85%;
+    --health-text: 222 66% 13%;
+    --health-text-light: 220 16% 42%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(227 78% 36%),
+      hsl(224 70% 46%)
+    );
+    --gradient-mint: linear-gradient(
+      180deg,
+      hsl(187 55% 98%),
+      hsl(185 72% 93%)
+    );
+    --gradient-hero: linear-gradient(
+      140deg,
+      hsl(187 55% 97%) 0%,
+      hsl(183 80% 93%) 45%,
+      hsl(220 72% 92%) 100%
+    );
+    --gradient-accent: linear-gradient(
+      135deg,
+      hsl(174 72% 56%),
+      hsl(160 100% 32%)
+    );
+
+    /* Shadows */
+    --shadow-soft: 0 4px 24px -2px hsl(227 78% 36% / 0.12);
+    --shadow-card: 0 2px 16px -4px hsl(226 60% 20% / 0.09);
+    --shadow-hover: 0 12px 36px -8px hsl(227 78% 36% / 0.24);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --sidebar-background: 187 50% 98%;
+    --sidebar-foreground: 220 20% 26%;
+    --sidebar-primary: 227 78% 36%;
+    --sidebar-primary-foreground: 187 55% 97%;
+    --sidebar-accent: 176 62% 93%;
+    --sidebar-accent-foreground: 227 78% 36%;
+    --sidebar-border: 195 30% 87%;
+    --sidebar-ring: 227 78% 48%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    /* Prevent horizontal scrolling */
+    overflow-x: hidden;
+  }
+
+  /* Mobile-specific optimizations */
+  @media (max-width: 640px) {
+    html {
+      /* Improve text rendering on mobile */
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    body {
+      /* Ensure smooth scrolling on mobile */
+      -webkit-overflow-scrolling: touch;
+      /* Prevent zoom on input focus */
+      -webkit-touch-callout: none;
+    }
+
+    /* Contain the document rather than capping every element. */
+    html,
+    body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    /* Form controls need a comfortable height on phones. */
+    input,
+    select,
+    textarea {
+      min-height: 44px;
+    }
+
+    /* Improve form elements on mobile */
+    input,
+    textarea,
+    select {
+      font-size: 16px; /* Prevent zoom on focus */
+    }
+  }
+}
+
+@layer components {
+  /* Healthcare-specific component styles */
+  .healthcare-card {
+    @apply bg-card border border-border rounded-xl p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+    box-shadow: var(--shadow-card);
+  }
+
+  .healthcare-card:hover {
+    box-shadow: var(--shadow-hover);
+  }
+
+  .btn-healthcare-primary {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5;
+    background: var(--gradient-primary);
+  }
+
+  .mint-section {
+    background: var(--gradient-mint);
+  }
+
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+
+  .pulse-gentle {
+    animation: pulse-gentle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+
+  .icon-pulse {
+    animation: icon-pulse 2s ease-in-out infinite;
+  }
+
+  /* Mobile-specific components */
+  .mobile-container {
+    @apply px-4 sm:px-6 lg:px-8 max-w-full;
+  }
+
+  .mobile-safe-area {
+    @apply overflow-hidden;
+  }
+
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+}
+
+@layer utilities {
+  .text-health-green {
+    color: hsl(var(--health-green));
+  }
+
+  .text-health-text {
+    color: hsl(var(--health-text));
+  }
+
+  .text-health-text-light {
+    color: hsl(var(--health-text-light));
+  }
+
+  .bg-health-mint {
+    background-color: hsl(var(--health-mint));
+  }
+
+  .bg-health-mint-hover {
+    background-color: hsl(var(--health-mint-hover));
+  }
+
+  .bg-health-sage {
+    background-color: hsl(var(--health-sage));
+  }
+
+  /* Mobile-specific utilities */
+  .mobile-text-xs {
+    @apply text-xs sm:text-sm;
+  }
+
+  .mobile-text-sm {
+    @apply text-sm sm:text-base;
+  }
+
+  .mobile-text-base {
+    @apply text-base sm:text-lg;
+  }
+
+  .mobile-text-lg {
+    @apply text-lg sm:text-xl;
+  }
+
+  .mobile-text-xl {
+    @apply text-xl sm:text-2xl;
+  }
+
+  .mobile-text-2xl {
+    @apply text-2xl sm:text-3xl;
+  }
+
+  .mobile-text-3xl {
+    @apply text-3xl sm:text-4xl;
+  }
+
+  .mobile-spacing-2 {
+    @apply space-y-2 sm:space-y-4;
+  }
+
+  .mobile-spacing-4 {
+    @apply space-y-4 sm:space-y-6;
+  }
+
+  .mobile-spacing-6 {
+    @apply space-y-6 sm:space-y-8;
+  }
+
+  .mobile-padding-4 {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  .mobile-padding-6 {
+    @apply px-6 sm:px-8 lg:px-12;
+  }
+
+  /* Prevent horizontal scroll */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Custom keyframes */
+@keyframes pulse-gentle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes icon-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce-gentle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Animation utilities */
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out;
+}
+
+.animate-fade-in-down {
+  animation: fade-in-down 0.6s ease-out;
+}
+
+.animate-fade-in-left {
+  animation: fade-in-left 0.6s ease-out;
+}
+
+.animate-fade-in-right {
+  animation: fade-in-right 0.6s ease-out;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s ease-out;
+}
+
+.animate-bounce-gentle {
+  animation: bounce-gentle 2s ease-in-out infinite;
+}
+
+/* Stagger animations */
+.animate-stagger-1 {
+  animation-delay: 0.1s;
+  animation-fill-mode: both;
+}
+
+.animate-stagger-2 {
+  animation-delay: 0.2s;
+  animation-fill-mode: both;
+}
+
+.animate-stagger-3 {
+  animation-delay: 0.3s;
+  animation-fill-mode: both;
+}
+
+.animate-stagger-4 {
+  animation-delay: 0.4s;
+  animation-fill-mode: both;
+}
+
+/* Hover animations */
+.hover-lift {
+  transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px -10px hsl(var(--primary) / 0.3);
+}
+
+/* Enhanced animations */
+@keyframes gradient {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+@keyframes slide-in-blur {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+}
+
+@keyframes morph {
+  0%,
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.5);
+  }
+}
+
+/* Enhanced utilities */
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 3s ease infinite;
+}
+
+.animate-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  background-size: 200px 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 2s infinite;
+}
+
+.animate-slide-in-blur {
+  animation: slide-in-blur 0.6s ease-out;
+}
+
+.animate-morph {
+  animation: morph 8s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Enhanced hover effects */
+.hover-glow:hover {
+  box-shadow: 0 0 30px hsl(var(--primary) / 0.4);
+}
+
+.hover-gradient:hover {
+  background: linear-gradient(
+    45deg,
+    hsl(var(--primary)),
+    hsl(var(--health-green-light))
+  );
+}
+
+/* Scroll-triggered animations */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.6s ease;
+}
+
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Enhanced navigation effects */
+.nav-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.nav-item:hover::before {
+  left: 100%;
+}
+
+/* Enhanced button styles */
+.btn-modern {
+  @apply relative overflow-hidden rounded-xl px-8 py-4 font-medium transition-all duration-300;
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary)),
+    hsl(var(--health-green-light))
+  );
+}
+
+.btn-modern::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.btn-modern:hover::before {
+  left: 100%;
+}
+
+.btn-modern:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px hsl(var(--primary) / 0.3);
+}
+
+/* Enhanced card animations */
+.card-modern {
+  @apply relative overflow-hidden rounded-2xl border border-border/50 bg-white/80 backdrop-blur-sm transition-all duration-500;
+}
+
+.card-modern:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px hsl(var(--primary) / 0.15);
+}
+
+.card-modern::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    hsl(var(--primary)),
+    hsl(var(--health-green-light))
+  );
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.card-modern:hover::before {
+  transform: scaleX(1);
+}
+
+/* Enhanced glass morphism */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================================
+   Hygeia surfaces
+   Alternating pale/deep bands give the page a calm rhythm so no
+   single section feels like a warning notice.
+   ============================================================ */
+
+.cool-section {
+  background: var(--gradient-mint);
+}
+
+.ice-section {
+  background: hsl(var(--ice));
+}
+
+.royal-section {
+  background: hsl(var(--royal-dark));
+  color: hsl(var(--ice));
+}
+
+.hero-cool {
+  background: var(--gradient-hero);
+}
+
+.soft-card {
+  background: hsl(0 0% 100%);
+  border: 1px solid hsl(var(--border));
+  border-radius: 1.25rem;
+  box-shadow: var(--shadow-card);
+  transition: var(--transition-smooth);
+}
+
+.soft-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
+  border-color: hsl(var(--turquoise) / 0.6);
+}
+
+/* Underline that reads as emphasis, not a link */
+.marker {
+  background-image: linear-gradient(
+    to top,
+    hsl(var(--turquoise) / 0.45) 0.35em,
+    transparent 0.35em
+  );
+}
+
+/* Grain keeps the large ice areas from looking flat and clinical */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: radial-gradient(
+    hsl(var(--royal) / 0.05) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+/* Scan sweep for the image-analysis window */
+@keyframes scan-sweep {
+  0% {
+    top: -4rem;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+.scan-sweep {
+  animation: scan-sweep 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+
+/* ============================================================
+   Mobile behaviour
+   ============================================================ */
+
+/* Tap flashes read as jank on a page meant to feel calm. */
+a,
+button,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* iOS Safari's collapsing toolbar makes 100vh taller than the visible
+   viewport, so a vh-sized sheet hides its own footer behind the chrome.
+   dvh tracks the real height; the vh line is the fallback for old engines. */
+.chat-sheet {
+  height: 85vh;
+  height: 85dvh;
+}
+
+.chat-sheet-full {
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* Scrolling to the end of the message list should not then start dragging
+   the page behind it. */
+.scroll-contain {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* While the sheet is open on a phone it covers the page; letting the page
+   scroll underneath it is disorienting. */
+body.chat-locked {
+  overflow: hidden;
+  touch-action: none;
+}
+
+
+/* Touch targets keyed off the input device, not the screen width — a tablet
+   is a finger device at 768px just as much as a phone is at 390px. */
+@media (pointer: coarse) {
+  button,
+  [role="button"],
+  a[role="button"] {
+    min-height: 44px;
+  }
+
+  /* Inline links can't take a min-height, so give the ones that stand alone
+     as navigation a real hit area with padding instead. */
+  .tap-target {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+
+/* ============================================================
+   Hygeia app (chat, results) - shared primitives
+   ============================================================ */
+@layer components {
+  .card { @apply bg-card rounded-2xl border border-border shadow-card; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed; }
+  .btn-primary { @apply btn bg-royal text-white hover:bg-royal-light shadow-soft; }
+  .btn-secondary { @apply btn bg-turquoise-tint text-turquoise-deep hover:bg-turquoise/40; }
+  .btn-ghost { @apply btn bg-transparent text-royal hover:bg-royal-tint; }
+  .chip { @apply inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium cursor-pointer select-none transition-colors; }
+  .label { @apply block text-xs font-semibold uppercase tracking-wide text-ink-soft mb-1.5; }
+  .input { @apply w-full rounded-xl border border-border bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-royal/30; }
+
+  /* Chat */
+  .bubble { @apply max-w-[88%] sm:max-w-[78%] rounded-2xl px-4 py-2.5 text-[15px] leading-relaxed break-words; }
+  .bubble-bot { @apply bubble bg-white text-ink border border-border rounded-bl-md shadow-sm; }
+  .bubble-user { @apply bubble bg-royal text-white rounded-br-md; }
+  .quick { @apply inline-flex items-center gap-1.5 rounded-full border px-3.5 py-2 text-sm font-medium cursor-pointer select-none transition-all bg-white border-royal/25 text-royal hover:border-royal hover:bg-royal-tint active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed; }
+  .quick-on { @apply bg-royal text-white border-royal hover:bg-royal-dark; }
+  .quick-go { @apply bg-turquoise text-royal-dark border-turquoise hover:bg-turquoise/80 font-semibold; }
+}
+
+.fade-in { animation: fadeIn 0.35s ease-out both; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.pulse-ring { animation: pulseRing 1.4s ease-out infinite; }
+@keyframes pulseRing { 0% { box-shadow: 0 0 0 0 hsl(174 72% 56% / 0.5); } 100% { box-shadow: 0 0 0 10px hsl(174 72% 56% / 0); } }
+.typing-dot { animation: typingDot 1.2s ease-in-out infinite; }
+.typing-dot:nth-child(2) { animation-delay: .15s; }
+.typing-dot:nth-child(3) { animation-delay: .3s; }
+@keyframes typingDot { 0%, 60%, 100% { transform: translateY(0); opacity: .45; } 30% { transform: translateY(-3px); opacity: 1; } }
+.chat-screen { height: calc(100vh - 3.5rem); height: calc(100dvh - 3.5rem); }
+@media (min-width: 1024px) { .chat-screen { height: calc(100vh - 4rem); height: calc(100dvh - 4rem); } }
+.safe-bottom { padding-bottom: max(0.75rem, env(safe-area-inset-bottom)); }

@@ -1,0 +1,159 @@
+{
+  "system": "Hygeia Vision AI Pipeline",
+  "version": "2.0 (app build 1.1.0)",
+  "clinical_status": "Undergoing clinical trial and clinical validation. Engineering performance is validated; clinical validity is not yet established.",
+  "intended_use": "Risk assessment, visual-feature analysis and clinical decision support. Not an autonomous medical diagnosis system.",
+  "components": [
+    {
+      "id": "relevance",
+      "name": "Skin Relevance Classification (gate)",
+      "documented_model": "EfficientNetV2-S binary classifier",
+      "documented_metrics": {
+        "test_images": 571,
+        "accuracy": 0.9947,
+        "false_accepts": 0,
+        "false_reject_rate": 0.0107
+      },
+      "deployed_here": "CLIP ViT-B/16 zero-shot prompt-ensemble gate (trained EfficientNetV2-S checkpoint not present in repository; drop-in via RELEVANCE_BACKEND=effnet)",
+      "role": "Terminal decision point. A rejected image returns a not-analysable payload and never reaches the analysis models."
+    },
+    {
+      "id": "likelihood",
+      "name": "Disease-Likelihood Vision Classification",
+      "documented_model": "DINOv2 ViT-L/14 (T11_dinov2_l14_deep_long_final), 304.4M params, CLS + mean-patch fusion, MLP head",
+      "training": {
+        "train": 3469,
+        "val": 655,
+        "test": 720,
+        "dedup": "dHash + verification pass; test split untouched",
+        "stages": "12 ep frozen -> 46 ep with 8/24 blocks unfrozen, LLRD 0.75",
+        "class_weights": "inverse-frequency"
+      },
+      "documented_metrics": {
+        "test_accuracy": 0.9486,
+        "accuracy_ci95": [
+          0.93,
+          0.9625
+        ],
+        "macro_f1": 0.9486,
+        "roc_auc_macro": 0.992,
+        "specificity_macro": 0.9897,
+        "mcc": 0.9384,
+        "binary_normal_vs_abnormal": {
+          "accuracy": 0.9931,
+          "sensitivity": 0.995,
+          "specificity": 0.9833,
+          "npv": 0.9752,
+          "roc_auc": 0.9955
+        },
+        "zero_miss_threshold": {
+          "threshold": 0.2,
+          "sensitivity": 1.0,
+          "specificity": 0.8917,
+          "accuracy": 0.9819
+        },
+        "confidence_gate": {
+          "threshold": 0.6,
+          "coverage": 0.958,
+          "accuracy_on_retained": 0.9638
+        }
+      },
+      "per_class_test": {
+        "Penile_cancer": {
+          "precision": 1.0,
+          "recall": 0.975,
+          "f1": 0.9873,
+          "auc": 0.9995
+        },
+        "Normal": {
+          "precision": 0.9752,
+          "recall": 0.9833,
+          "f1": 0.9793,
+          "auc": 0.9955
+        },
+        "Penile_candidiasis": {
+          "precision": 0.9291,
+          "recall": 0.9833,
+          "f1": 0.9555,
+          "auc": 0.9976
+        },
+        "Genital_warts": {
+          "precision": 0.9573,
+          "recall": 0.9333,
+          "f1": 0.9451,
+          "auc": 0.9927
+        },
+        "Syphillis": {
+          "precision": 0.9407,
+          "recall": 0.925,
+          "f1": 0.9328,
+          "auc": 0.9903
+        },
+        "HSV": {
+          "precision": 0.8917,
+          "recall": 0.8917,
+          "f1": 0.8917,
+          "auc": 0.9767
+        }
+      },
+      "ensemble": {
+        "members": {
+          "T11_dinov2_l14_deep_long_final": 0.667,
+          "T09_dinov2_b14_res336": 0.167,
+          "T05_dinov2_b14_unfreeze4": 0.167
+        },
+        "selection": "Caruana greedy forward selection on validation probabilities only",
+        "test_accuracy": 0.9486,
+        "test_macro_f1": 0.9484,
+        "test_roc_auc": 0.9954,
+        "note": "Identical accuracy to the single model; higher ROC-AUC (0.9920 -> 0.9954), which benefits the threshold-based escalation and confidence decisions. Deployed here as the default; LIKELIHOOD_MODE=single reproduces the documented single-model configuration."
+      },
+      "deployed_here": "Ensemble (T11 + T09 + T05, validation-selected weights), fp16, preprocessing identical to evaluation path"
+    },
+    {
+      "id": "segmentation",
+      "name": "Visual Abnormality Instance Segmentation (VAIS)",
+      "documented_model": "Ultralytics YOLO26L-seg, 2,500 annotated images (80/10/10)",
+      "documented_metrics": {
+        "precision": 0.895,
+        "recall": 0.858,
+        "mAP50": 0.92,
+        "mAP50_95": 0.674,
+        "instance_confidence_threshold": 0.3
+      },
+      "deployed_here": "Fusion segmenter (substitute for the absent YOLO weights): proposals from Qwen3-VL lesion grounding (semantic labels, relative 0-1000 boxes), Grounding DINO (tiny) morphology prompts and the classifier's attention map are merged by weighted box fusion (confidence rises with the number of independent sources that agree); SAM 2.1 (hiera-small) turns each fused box into a pixel mask; the second-reader VLM then reviews every numbered region and single-source proposals it rejects are removed. Feature extraction (area ratio, bbox, centroid, perimeter, circularity, solidity, shape descriptor, cluster summary) is unchanged. YOLO weights drop in via VAIS_BACKEND=yolo.",
+      "role": "Non-terminal. Instance counts are ordinal signals (none / few / several / many), not exact tallies.",
+      "fusion": {
+        "sources": [
+          "vlm (w=1.0)",
+          "gdino (w=0.8)",
+          "cam (w=0.6)"
+        ],
+        "fusion_iou": 0.45,
+        "mask_model": "facebook/sam2.1-hiera-small",
+        "instance_review": "second reader, numbered outlines",
+        "vlm_grounding_skipped_when": "classifier reads the image as confidently normal"
+      }
+    },
+    {
+      "id": "vlm",
+      "name": "Vision-Language Second Reader",
+      "deployed_here": "Qwen/Qwen3-VL-4B-Instruct (4-bit NF4) by default: it is grounding-capable, so one resident model serves as lesion grounder, second reader, instance reviewer and chat assistant on a 6 GB GPU. google/medgemma-4b-it (medically tuned, cannot emit boxes) via VLM_BACKEND=medgemma; on a larger GPU pair it with a dedicated grounder via VAIS_VLM_GROUNDER=Qwen/Qwen3-VL-2B-Instruct.",
+      "role": "Grounds lesions for the fusion segmenter, describes visible findings, checks consistency with the classifier, reviews each segmented region, lists red flags, writes the plain-language note and answers follow-up questions. It never overrides the measured classifier and its text is labelled as model-generated."
+    }
+  ],
+  "thresholds": {
+    "confidence_gate": 0.6,
+    "escalation_zero_miss": 0.2,
+    "vais_instance_confidence": 0.3,
+    "relevance": 0.5
+  },
+  "limitations": [
+    "Data volume is the binding constraint: three classes trained on fewer than 400 genuine images after de-duplication; HSV is the weakest class (F1 0.89).",
+    "Errors concentrate in the ulcerative-lesion cluster (warts/HSV/syphilis/candidiasis), which still routes to assessment.",
+    "The relevance gate does not assess image quality; blur/exposure heuristics are reported but not gating.",
+    "End-to-end chained sensitivity has not been measured on a single held-out set.",
+    "The VLM can hallucinate; its output is advisory and must never be surfaced as a diagnosis.",
+    "The relevance gate and the fusion segmenter deployed here are substitutes for the documented trained models and have no measured accuracy on this domain; multi-source agreement and the second-reader review reduce, but do not eliminate, false localisations."
+  ]
+}
