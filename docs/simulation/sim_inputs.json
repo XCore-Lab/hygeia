@@ -1,0 +1,47 @@
+{
+  "_note": "Hand-written, illustrative inputs for docs/simulation/simulate.py. These stand in for the model stages; they are NOT model outputs.",
+  "case01": {
+    "questionnaire": {
+      "visible_change": true,
+      "symptoms": ["blister"],
+      "duration": "<1w",
+      "pain": true,
+      "changed": false,
+      "exposure": "unprotected",
+      "partner_sti": false,
+      "prior_sti": false,
+      "sex_at_birth": null,
+      "age": null,
+      "notes": "Small blisters appeared three days ago. They sting."
+    },
+    "likelihood_distribution": {
+      "Genital_warts": 0.03,
+      "HSV": 0.86,
+      "Normal": 0.01,
+      "Penile_cancer": 0.01,
+      "Penile_candidiasis": 0.04,
+      "Syphillis": 0.05
+    },
+    "region_labels": { "1": "vesicle cluster", "2": "erythema" },
+    "second_reader": {
+      "visual_description": "A tight group of small fluid-filled blisters on a red base, on otherwise normal-looking skin.",
+      "consistency": "consistent",
+      "outside_trained_categories": false,
+      "best_match": "grouped vesicles on a red base",
+      "alternative_considerations": ["shingles (herpes zoster), which is not sexually transmitted"],
+      "red_flags": [],
+      "image_quality": "good",
+      "outlines_verdict": "good",
+      "missed_lesions": [],
+      "refused": false,
+      "patient_summary": "I can see a small group of fluid-filled blisters on a patch of red skin. This kind of pattern is common and treatable, and a clinic can confirm what it is with a quick swab. It is best checked while the blisters are still fresh."
+    },
+    "symptoms_only_questionnaire": {
+      "visible_change": false,
+      "symptoms": ["pain_urination", "discharge"],
+      "duration": "<1w",
+      "pain": true,
+      "exposure": "unprotected"
+    }
+  }
+}
